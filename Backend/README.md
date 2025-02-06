@@ -162,3 +162,68 @@ The request body should be a JSON object containing the following fields:
 ### Notes
 
 - The `password` field is stored securely using bcrypt hashing.
+
+# User Profile Endpoint
+
+## GET /users/profile
+
+### Description
+
+This endpoint is used to retrieve the profile of the authenticated user.
+
+### Responses
+
+#### Success
+
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  {
+    "_id": "user-id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+  ```
+
+#### Authentication Errors
+
+- **Status Code**: 401 Unauthorized
+- **Response Body**:
+  ```json
+  {
+    "message": "Authentication required"
+  }
+  ```
+
+# User Logout Endpoint
+
+## GET /users/logout
+
+### Description
+
+This endpoint is used to log out the authenticated user.
+
+### Responses
+
+#### Success
+
+- **Status Code**: 200 OK
+- **Response Body**:
+  ```json
+  {
+    "message": "Logged out"
+  }
+  ```
+
+#### Authentication Errors
+
+- **Status Code**: 401 Unauthorized
+- **Response Body**:
+  ```json
+  {
+    "message": "Authentication required"
+  }
+  ```
