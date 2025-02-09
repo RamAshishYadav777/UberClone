@@ -227,3 +227,179 @@ This endpoint is used to log out the authenticated user.
     "message": "Authentication required"
   }
   ```
+# Captain API Routes Documentation
+
+## Authentication
+All captain routes require a valid JWT token in the Authorization header:
+```
+Authorization: Bearer <token>
+```
+
+## Available Routes
+
+### Register Captain
+- **Method:** POST
+- **Endpoint:** `/api/captain/register`
+- **Description:** Register a new captain account
+- **Request Body:**
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string",
+  "vehicleType": "string",
+  "vehicleNumber": "string",
+  "licenseNumber": "string"
+}
+```
+- **Response:** 
+```json
+{
+  "success": true,
+  "message": "Captain registered successfully",
+  "data": {
+    "captainId": "string",
+    "name": "string",
+    "email": "string"
+  }
+}
+```
+
+### Captain Login
+- **Method:** POST
+- **Endpoint:** `/api/captain/login`
+- **Description:** Authenticate captain and get access token
+- **Request Body:**
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+- **Response:**
+```json
+{
+  "success": true,
+  "token": "string",
+  "captain": {
+    "id": "string",
+    "name": "string",
+    "email": "string"
+  }
+}
+```
+
+### Update Captain Profile
+- **Method:** PUT
+- **Endpoint:** `/api/captain/profile`
+- **Description:** Update captain's profile information
+- **Request Body:**
+```json
+{
+  "name": "string",
+  "phone": "string",
+  "vehicleType": "string",
+  "vehicleNumber": "string"
+}
+```
+- **Response:**
+```json
+{
+  "success": true,
+  "message": "Profile updated successfully",
+  "data": {
+    "captainId": "string",
+    "name": "string",
+    "phone": "string"
+  }
+}
+```
+
+### Get Captain Profile
+- **Method:** GET
+- **Endpoint:** `/api/captain/profile`
+- **Description:** Get captain's profile information
+- **Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "captainId": "string",
+    "name": "string",
+    "email": "string",
+    "phone": "string",
+    "vehicleType": "string",
+    "vehicleNumber": "string",
+    "rating": number,
+    "totalTrips": number
+  }
+}
+```
+
+### Update Captain Status
+- **Method:** PUT
+- **Endpoint:** `/api/captain/status`
+- **Description:** Update captain's availability status
+- **Request Body:**
+```json
+{
+  "status": "online" | "offline" | "busy"
+}
+```
+- **Response:**
+```json
+{
+  "success": true,
+  "message": "Status updated successfully",
+  "data": {
+    "status": "string"
+  }
+}
+```
+
+### Get Captain Trips
+- **Method:** GET
+- **Endpoint:** `/api/captain/trips`
+- **Description:** Get captain's trip history
+- **Query Parameters:**
+  - `page` (optional): Page number
+  - `limit` (optional): Items per page
+- **Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "trips": [
+      {
+        "tripId": "string",
+        "pickup": "string",
+        "destination": "string",
+        "fare": number,
+        "status": "string",
+        "date": "string"
+      }
+    ],
+    "totalPages": number,
+    "currentPage": number
+  }
+}
+```
+
+## Error Responses
+All routes may return the following error responses:
+
+```json
+{
+  "success": false,
+  "error": "Error message",
+  "statusCode": number
+}
+```
+
+Common status codes:
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 500: Internal Server Error
